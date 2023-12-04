@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('front.pages.games');
-});
+
+Route::get('/', GameController::class . "@index")
+    ->name('games.index');
+
+Route::post('/games', GameController::class . "@create")
+    ->name('games.create');
+
+Route::get('/games/{game}', GameController::class . "@show")
+    ->name('games.show');

@@ -34,4 +34,15 @@ class Game extends Model
 
         return $players;
     }
+
+    public function playersShortDisplay(): string
+    {
+        $playerFirstNames = [];
+
+        foreach ($this->players() as $player) {
+            array_push($playerFirstNames, $player->first_name);
+        }
+
+        return implode(", ", $playerFirstNames);
+    }
 }
