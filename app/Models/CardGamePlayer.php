@@ -18,7 +18,7 @@ class CardGamePlayer extends Model
 
     public function card()
     {
-        return $this->haseOne(Card::class);
+        return $this->belongsTo(Card::class);
     }
 
     public function game()

@@ -8,7 +8,7 @@
 
     <body>
         <x-header-nav />
-        <main>@yield('main-content')</main>
+        <main class="bg-gray-100">@yield('main-content')</main>
         <x-site-footer />
     </body>
 </html>

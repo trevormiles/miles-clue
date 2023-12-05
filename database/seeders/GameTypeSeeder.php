@@ -10,7 +10,7 @@ class GameTypeSeeder extends Seeder
     public function run()
     {
         GameType::create([
-            'name' => 'single'
+            'name' => 'Single'
         ]);
     }
 }

@@ -27,7 +27,7 @@ class Game extends Model
         $players = collect();
 
         foreach ($this->cardGamePlayers as $cardGamePlayer) {
-            if (!$players->contains('id', $cardGamePlayer->player->id)) {
+            if ($cardGamePlayer->player && !$players->contains('id', $cardGamePlayer->player->id)) {
                 $players->push($cardGamePlayer->player);
             }
         }
@@ -35,8 +35,17 @@ class Game extends Model
         return $players;
     }
 
+    public function hasPlayers(): bool
+    {
+        return $this->players()->count() > 0;
+    }
+
     public function playersShortDisplay(): string
     {
+        if (!$this->hasPlayers()) {
+            return "None";
+        }
+
         $playerFirstNames = [];
 
         foreach ($this->players() as $player) {
@@ -44,5 +53,15 @@ class Game extends Model
         }
 
         return implode(", ", $playerFirstNames);
+    }
+
+    public function unclaimedCards(): Collection
+    {
+        return $this->cardGamePlayers()->whereNull('player_id')->get();
+    }
+
+    public function unclaimedCardsQuantity(): int
+    {
+        return $this->cardGamePlayers()->whereNull('player_id')->count();
     }
 }

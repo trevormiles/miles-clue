@@ -75,6 +75,20 @@ class GameSeeder extends Seeder
                     }
                 }
             }
+
+            // Create records for the unclaimed cards (in the packet) not assigned to any player
+            foreach ($availableCards as $card) {
+                $cardIndex = rand(0, count($availableCards) - 1);
+
+                CardGamePlayer::create([
+                    'card_id' => $availableCards[$cardIndex],
+                    'game_id' => $game->id,
+                    'player_id' => null,
+                ]);
+
+                unset($availableCards[$cardIndex]);
+                $availableCards = array_values($availableCards);
+            }
         }
     }
 }
