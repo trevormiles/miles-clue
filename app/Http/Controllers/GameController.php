@@ -61,6 +61,7 @@ class GameController extends Controller
     {
         return view('front.pages.games.show', [
             'game' => $game,
+            'gamePlayers' => $game->players(),
         ]);
     }
 
@@ -102,14 +103,18 @@ class GameController extends Controller
     /**
      * Create the player/card/game relation
      */
-    public function storePlayer(Request $request): RedirectResponse
+    public function storePlayer(Request $request, Game $game): RedirectResponse
     {
         $playerID = $request->input('player_id');
 
-        foreach ($request->all() as $card) {
-            // Save cards here
+        foreach ($request->all() as $key => $value) {
+            if (str_contains($key, 'card_')) {
+                $cardGamePlayer = CardGamePlayer::findOrFail($value);
+                $cardGamePlayer->player_id = $playerID;
+                $cardGamePlayer->save();
+            }
         }
 
-        return redirect()->route('games.index');
+        return redirect()->route('games.show', $game->id);
     }
 }

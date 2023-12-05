@@ -31,13 +31,21 @@ class PlayerSeeder extends Seeder
                 'last_name' => 'Miles',
             ],
             [
+                'first_name' => 'Mack',
+                'last_name' => 'Miles',
+            ],
+            [
                 'first_name' => 'Matt',
                 'last_name' => 'Miles',
             ],
             [
                 'first_name' => 'Michelle',
                 'last_name' => 'Miles',
-            ]
+            ],
+            [
+                'first_name' => 'Daniel',
+                'last_name' => 'Miles',
+            ],
         ];
 
         Player::insert($players);

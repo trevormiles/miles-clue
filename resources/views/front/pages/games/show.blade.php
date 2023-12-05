@@ -11,12 +11,16 @@
         </div>
 
         <div class="flex flex-col gap-4">
-            @foreach ($game->players() as $player)
-                <div class="block rounded-lg p-4 bg-white w-full flex justify-between items-center">
-                    <h3 class="mb-0">{{ $player->fullName() }}</h3>
-                    <div>Cards: {{ $player->cardsQuantityForGame($game->id) }}</div>
-                </div>
-            @endforeach
+            @if ($gamePlayers->count() > 0)
+                @foreach ($gamePlayers as $player)
+                    <div class="block rounded-lg p-4 bg-white w-full flex justify-between items-center">
+                        <h3 class="mb-0">{{ $player->fullName() }}</h3>
+                        <div>Cards: {{ $player->cardsQuantityForGame($game->id) }}</div>
+                    </div>
+                @endforeach
+            @else
+                <div>There are no players yet.</div>
+            @endif
         </div>
 
         <h2 class="mt-10">Cards:</h2>
