@@ -25,6 +25,6 @@
 
         <h2 class="mt-10">Cards:</h2>
         <p>Quantity of unclaimed cards: {{ $game->unclaimedCardsQuantity() }}</p>
-        <a href="#" class="btn mt-1">Go to Card Checker</a>
+        <a href="{{ route('games.cardChecker', $game->id) }}" class="btn mt-1">Go to Card Checker</a>
     </div>
 @endsection

@@ -10,6 +10,7 @@ class MockDataSeeder extends Seeder
 {
     public function run()
     {
+        $this->call(CardCategorySeeder::class);
         $this->call(CardSeeder::class);
         $this->call(GameTypeSeeder::class);
         $this->call(CardGameTypeSeeder::class);

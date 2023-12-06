@@ -26,4 +26,21 @@ class GameType extends Model
 
         return $cards;
     }
+
+    public function cardsGroupedByCategory(): array
+    {
+        $cards = $this->cards();
+        $cardCategories = CardCategory::all();
+
+        $result = [];
+
+        foreach ($cardCategories as $cardCategory) {
+            array_push($result, [
+                "cardCategory" => $cardCategory,
+                "cards" => $cards->where("card_category_id", $cardCategory->id)->all(),
+            ]);
+        }
+
+        return $result;
+    }
 }

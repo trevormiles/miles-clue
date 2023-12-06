@@ -97,6 +97,7 @@ class GameController extends Controller
         return view('front.pages.games.add-player', [
             'game' => $game,
             'players' => Player::all(),
+            'cardsGroupedByCategory' => $game->gameType->cardsGroupedByCategory(),
         ]);
     }
 
@@ -109,12 +110,25 @@ class GameController extends Controller
 
         foreach ($request->all() as $key => $value) {
             if (str_contains($key, 'card_')) {
-                $cardGamePlayer = CardGamePlayer::findOrFail($value);
+                $cardGamePlayer = CardGamePlayer::where("card_id", $value)->where("game_id", $game->id)->first();
                 $cardGamePlayer->player_id = $playerID;
                 $cardGamePlayer->save();
             }
         }
 
         return redirect()->route('games.show', $game->id);
+    }
+
+    /**
+     * Display the card checker page
+     */
+    public function cardChecker(Game $game)
+    {
+        return view('front.pages.games.card-checker', [
+            'game' => $game,
+            'players' => $game->players(),
+            'cardsGroupedByCategory' => $game->gameType->cardsGroupedByCategory(),
+            'cardGamePlayers' => $game->cardGamePlayers(),
+        ]);
     }
 }

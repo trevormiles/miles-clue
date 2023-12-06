@@ -27,11 +27,18 @@
 
             <div class="mt-8">
                 <h2>Select Cards:</h2>
-                <div class="flex flex-col gap-1">
-                    @foreach ($game->cardGamePlayers as $cardGamePlayer)
+                <div class="flex flex-col gap-6">
+                    @foreach ($cardsGroupedByCategory as $category)
                         <div>
-                            <input type="checkbox" id="card_{{ $cardGamePlayer->id }}" name="card_{{ $cardGamePlayer->id }}" value="{{ $cardGamePlayer->id }}">
-                            <label class="ml-1" for="card_{{ $cardGamePlayer->id }}">{{ $cardGamePlayer->card->name }}</label>
+                            <h3>{{ $category['cardCategory']->name }}s</h3>
+                            <div class="flex flex-col gap-1">
+                                @foreach ($category['cards'] as $card)
+                                    <div>
+                                        <input type="checkbox" id="card_{{ $card->id }}" name="card_{{ $card->id }}" value="{{ $card->id }}">
+                                        <label class="ml-1" for="card_{{ $card->id }}">{{ $card->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     @endforeach
                 </div>

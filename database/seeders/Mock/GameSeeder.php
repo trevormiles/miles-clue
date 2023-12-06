@@ -7,6 +7,7 @@ use App\Models\GameType;
 use App\Models\Game;
 use App\Models\CardGamePlayer;
 use App\Models\Player;
+use Illuminate\Support\Carbon;
 
 class GameSeeder extends Seeder
 {
@@ -17,18 +18,26 @@ class GameSeeder extends Seeder
             [
                 'name' => 'Nov. 27th, 2023',
                 'game_type_id' => $singleClueGameType->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ],
             [
                 'name' => 'Nov. 15th, 2023',
                 'game_type_id' => $singleClueGameType->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ],
             [
                 'name' => 'Dec. 26th, 2022',
                 'game_type_id' => $singleClueGameType->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ],
             [
                 'name' => 'Dec. 21st, 2022',
                 'game_type_id' => $singleClueGameType->id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]
         ];
 

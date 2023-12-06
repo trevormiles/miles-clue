@@ -42,3 +42,6 @@ Route::get('/games/{game}/add-player', GameController::class . "@addPlayer")
 
 Route::patch('/games/{game}/add-player', GameController::class . "@storePlayer")
     ->name('games.storePlayer');
+
+Route::get('/games/{game}/card-checker', GameController::class . "@cardChecker")
+    ->name('games.cardChecker');
