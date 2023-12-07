@@ -126,9 +126,6 @@ class GameController extends Controller
     {
         return view('front.pages.games.card-checker', [
             'game' => $game,
-            'players' => $game->players(),
-            'cardsGroupedByCategory' => $game->gameType->cardsGroupedByCategory(),
-            'cardGamePlayers' => $game->cardGamePlayers(),
         ]);
     }
 }
