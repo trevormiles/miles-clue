@@ -72,20 +72,34 @@
             <div class="text-red-700 mt-2 text-sm">Field is required</div>
         @endif
     </div>
-    <div class="mt-5 font-semibold">
+
+    <div class="mt-5 mb-2 font-semibold">
         @if ($showHasAtLeast1Success === true)
-            <div class="text-green-700">Has at least 1</div>
+            <div class="text-green-700 flex items-center gap-2">
+                @svg('checkmark-circle', 'w-8 h-auto')
+                <span>Has at least 1</span>
+            </div>
         @endif
         @if ($showQuantitySuccess === true)
-            <div class="text-green-700">Correct quantity</div>
+            <div class="text-green-700 flex items-center gap-2">
+                @svg('checkmark-circle', 'w-8 h-auto')
+                <span>Correct quantity</span>
+            </div>
         @endif
         @if ($showHasAtLeast1Failure === true)
-            <div class="text-red-700">Does not have at least 1</div>
+            <div class="text-red-700 flex items-center gap-2">
+                @svg('close', 'w-4 h-auto')
+                <span>Does not have at least 1</span>
+            </div>
         @endif
         @if ($showQuantityFailure === true)
-            <div class="text-red-700">Wrong quantity</div>
+            <div class="text-red-700 flex items-center gap-2">
+                @svg('close', 'w-4 h-auto')
+                <span>Wrong quantity</span>
+            </div>
         @endif
     </div>
+
     <button wire:click="runCheck" class="btn btn--full-width py-10 mt-4">Run Check</button>
 
     @script
