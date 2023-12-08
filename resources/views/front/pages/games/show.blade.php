@@ -13,9 +13,20 @@
         <div class="flex flex-col gap-4">
             @if ($gamePlayers->count() > 0)
                 @foreach ($gamePlayers as $player)
-                    <div class="block rounded-lg p-4 bg-white w-full flex justify-between items-center">
+                    <div class="block rounded-lg p-4 bg-white w-full flex items-center">
                         <h3 class="mb-0">{{ $player->fullName() }}</h3>
-                        <div>Cards: {{ $player->cardsQuantityForGame($game->id) }}</div>
+                        <div class="ml-auto">Cards: {{ $player->cardsQuantityForGame($game->id) }}</div>
+                        <form
+                            method="POST"
+                            action="{{ route('games.removePlayer', ['game' => $game->id, 'player' => $player->id]) }}"
+                            class="flex justify-center items-center ml-6"
+                        >
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="text-red-700">
+                                @svg('trashcan', 'w-4 h-auto')
+                            </button>
+                        </form>
                     </div>
                 @endforeach
             @else

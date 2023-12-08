@@ -120,6 +120,23 @@ class GameController extends Controller
     }
 
     /**
+     * Remove the player from the game by setting player_id to null on the player/card/game relation
+     */
+    public function removePlayer(Game $game, Player $player): RedirectResponse
+    {
+        $cardGamePlayers = CardGamePlayer::where('game_id', $game->id)
+            ->where('player_id', $player->id)
+            ->get();
+
+        foreach ($cardGamePlayers as $cardGamePlayer) {
+            $cardGamePlayer->player_id = null;
+            $cardGamePlayer->save();
+        }
+
+        return redirect()->route('games.show', $game->id);
+    }
+
+    /**
      * Display the card checker page
      */
     public function cardChecker(Game $game)
