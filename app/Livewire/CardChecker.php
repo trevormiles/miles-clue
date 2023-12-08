@@ -44,11 +44,19 @@ class CardChecker extends Component
 
     public function incrementSelectedQuantity(): void
     {
+        if ($this->selectedQuantity === 3) {
+            return;
+        }
+
         $this->selectedQuantity++;
     }
 
     public function decrementSelectedQuantity(): void
     {
+        if ($this->selectedQuantity === 0) {
+            return;
+        }
+
         $this->selectedQuantity--;
     }
 

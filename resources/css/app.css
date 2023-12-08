@@ -47,6 +47,12 @@ p {
     transition: 0.2s all ease;
 }
 
+.btn--full-width {
+    padding: 1rem 2rem;
+    width: 100%;
+    max-width: 30rem;
+}
+
 .btn:hover {
     background-color: #1a5420;
 }

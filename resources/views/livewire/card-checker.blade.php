@@ -16,7 +16,7 @@
             @endforeach
         </select>
         @if ($showPlayerRequiredError)
-            <div>Field is required</div>
+            <div class="text-red-700 mt-2 text-sm">Field is required</div>
         @endif
     </div>
 
@@ -40,12 +40,12 @@
                 $cardRequiredErrorVariable = "showCard{$iteration}RequiredError";
             @endphp
             @if ($$cardRequiredErrorVariable)
-                <div>Field is required</div>
+                <div class="text-red-700 mt-2 text-sm">Field is required</div>
             @endif
         </div>
     @endforeach
 
-    <div class="mt-3 flex justify-between check-type-quantity">
+    <div class="mt-3 flex justify-start items-end check-type-quantity">
         <div>
             <label for="type" class="block font-semibold text-sm">Type of check:</label>
             <select
@@ -58,27 +58,35 @@
             </select>
         </div>
         @if ($selectedCheckType === "quantity")
-            <div wire:model="selectedQuantity">{{ $selectedQuantity }}</div>
-            <button wire:click="incrementSelectedQuantity">+</button>
-            <button wire:click="decrementSelectedQuantity">-</button>
+            <div class="ml-3 bg-white border border-200 w-10 h-10 flex justify-center items-center rounded-md">
+                <span>{{ $selectedQuantity }}</span>
+            </div>
+            <button wire:click="incrementSelectedQuantity" class="ml-3 w-10 h-10 flex justify-center items-center rounded-md bg-green-700 text-white">
+                <span>+</span>
+            </button>
+            <button wire:click="decrementSelectedQuantity" class="ml-3 w-10 h-10 flex justify-center items-center rounded-md bg-red-700 text-white">
+                <span>-</span>
+            </button>
         @endif
         @if ($showCheckTypeRequiredError)
-            <div>Field is required</div>
+            <div class="text-red-700 mt-2 text-sm">Field is required</div>
         @endif
     </div>
-    @if ($showHasAtLeast1Success === true)
-        <div>Correct has at least 1</div>
-    @endif
-    @if ($showQuantitySuccess === true)
-        <div>Correct quantity</div>
-    @endif
-    @if ($showHasAtLeast1Failure === true)
-        <div>Wrong has at least 1</div>
-    @endif
-    @if ($showQuantityFailure === true)
-        <div>Wrong quantity</div>
-    @endif
-    <button wire:click="runCheck" class="btn mt-6">Run Check</button>
+    <div class="mt-5 font-semibold">
+        @if ($showHasAtLeast1Success === true)
+            <div class="text-green-700">Has at least 1</div>
+        @endif
+        @if ($showQuantitySuccess === true)
+            <div class="text-green-700">Correct quantity</div>
+        @endif
+        @if ($showHasAtLeast1Failure === true)
+            <div class="text-red-700">Does not have at least 1</div>
+        @endif
+        @if ($showQuantityFailure === true)
+            <div class="text-red-700">Wrong quantity</div>
+        @endif
+    </div>
+    <button wire:click="runCheck" class="btn btn--full-width py-10 mt-4">Run Check</button>
 
     @script
         <script>
