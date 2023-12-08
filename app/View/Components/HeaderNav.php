@@ -13,7 +13,7 @@ class HeaderNav extends Component
         $this->links = [
             [
                 'title' => 'Players',
-                'href' => '/',
+                'href' => route('players.index'),
             ]
         ];
     }

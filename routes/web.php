@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\PlayerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,23 @@ Route::patch('/games/{game}/remove-player/{player}', GameController::class . "@r
 
 Route::get('/games/{game}/card-checker', GameController::class . "@cardChecker")
     ->name('games.cardChecker');
+
+
+// Player routes
+Route::get('/players', PlayerController::class . "@index")
+    ->name('players.index');
+
+Route::get('/players/create', PlayerController::class . "@create")
+    ->name('players.create');
+
+Route::post('/players', PlayerController::class . "@store")
+    ->name('players.store');
+
+Route::get('/players/{player}', PlayerController::class . "@show")
+    ->name('players.show');
+
+Route::get('/players/{player}/edit', PlayerController::class . "@edit")
+    ->name('players.edit');
+
+Route::patch('/players/{player}', PlayerController::class . "@update")
+    ->name('players.update');
