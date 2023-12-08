@@ -5,7 +5,7 @@
         <a href="{{ route('players.index') }}" class="back-button">Back to all players</a>
         <h1 class="m-0">Create New Player</h1>
 
-        <form method="POST" action="{{ route('players') }}">
+        <form method="POST" action="{{ route('players.store') }}">
             @csrf
 
             <div class="mt-5">

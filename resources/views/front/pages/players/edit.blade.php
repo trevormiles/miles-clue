@@ -35,7 +35,7 @@
                 />
             </div>
 
-            <button type="submit" class="btn mt-8">Create</button>
+            <button type="submit" class="btn mt-8">Save</button>
         </form>
     </div>
 @endsection

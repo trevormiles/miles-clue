@@ -68,17 +68,23 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Game $game)
     {
-        //
+        return view('front.pages.games.edit', [
+            'game' => $game,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Game $game)
     {
-        //
+        $name = $request->input('name');
+        $game->name = $name;
+        $game->save();
+
+        return redirect()->route('games.index');
     }
 
     /**

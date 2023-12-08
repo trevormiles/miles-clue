@@ -12,6 +12,10 @@ class HeaderNav extends Component
     {
         $this->links = [
             [
+                'title' => 'Games',
+                'href' => route('games.index'),
+            ],
+            [
                 'title' => 'Players',
                 'href' => route('players.index'),
             ]

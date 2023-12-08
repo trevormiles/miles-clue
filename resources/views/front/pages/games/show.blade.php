@@ -3,7 +3,12 @@
 @section('main-content')
     <div class="container mx-auto px-4 py-10">
         <a href="{{ route('games.index') }}" class="back-button">Back to all games</a>
-        <h1 class="m-0">{{ $game->name }}</h1>
+        <div class="flex justify-between items-center">
+            <h1 class="m-0">{{ $game->name }}</h1>
+            <a href="{{ route('games.edit', $game->id) }}" class="bg-white py-4 px-4 rounded-md">
+                @svg('pencil-icon', 'w-4 h-auto text-green-700')
+            </a>
+        </div>
 
         <div class="flex justify-between items-center mt-6 mb-4">
             <h2 class="mb-0">Players:</h2>
