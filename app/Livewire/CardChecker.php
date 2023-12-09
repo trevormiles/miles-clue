@@ -39,7 +39,7 @@ class CardChecker extends Component
         $this->game = $game;
         $this->players = $game->players();
         $this->cardsGroupedByCategory = $game->gameType->cardsGroupedByCategory();
-        $this->cardGamePlayers = $game->cardGamePlayers()->get();
+        $this->cardGamePlayers = $game->cardGamePlayers;
     }
 
     public function incrementSelectedQuantity(): void

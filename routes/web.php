@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\CardController;
+use App\Http\Controllers\GameTypeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,3 +91,23 @@ Route::get('/cards/{card}/edit', CardController::class . "@edit")
 
 Route::patch('/cards/{card}', CardController::class . "@update")
     ->name('cards.update');
+
+
+// Game type routes
+Route::get('/game-types', GameTypeController::class . "@index")
+->name('gameTypes.index');
+
+Route::get('/game-types/create', GameTypeController::class . "@create")
+->name('gameTypes.create');
+
+Route::post('/game-types', GameTypeController::class . "@store")
+->name('gameTypes.store');
+
+Route::get('/game-types/{gameType}', GameTypeController::class . "@show")
+->name('gameTypes.show');
+
+Route::get('/game-types/{gameType}/edit', GameTypeController::class . "@edit")
+->name('gameTypes.edit');
+
+Route::patch('/game-types/{gameType}', GameTypeController::class . "@update")
+->name('gameTypes.update');

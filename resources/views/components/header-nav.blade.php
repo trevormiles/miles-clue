@@ -1,7 +1,7 @@
 <header class="bg-red-950">
     <div class="container mx-auto px-4 py-2">
         <div class="flex item-center justify-between">
-            <div class="text-white text-2xl font-extrabold">Miles Clue</div>
+            <a href="{{ route('games.index') }}" class="text-white text-2xl font-extrabold">Miles Clue</a>
             <button class="w-5 flex flex-col justify-center items-center" data-menu-toggle-btn>
                 <span class="bg-white w-full h-0.5"></span>
                 <span class="bg-white w-full h-0.5 my-1"></span>
