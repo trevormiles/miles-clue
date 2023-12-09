@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
+use App\Http\Controllers\CardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,23 @@ Route::get('/players/{player}/edit', PlayerController::class . "@edit")
 
 Route::patch('/players/{player}', PlayerController::class . "@update")
     ->name('players.update');
+
+
+// Card routes
+Route::get('/cards', CardController::class . "@index")
+    ->name('cards.index');
+
+Route::get('/cards/create', CardController::class . "@create")
+    ->name('cards.create');
+
+Route::post('/cards', CardController::class . "@store")
+    ->name('cards.store');
+
+Route::get('/cards/{card}', CardController::class . "@show")
+    ->name('cards.show');
+
+Route::get('/cards/{card}/edit', CardController::class . "@edit")
+    ->name('cards.edit');
+
+Route::patch('/cards/{card}', CardController::class . "@update")
+    ->name('cards.update');

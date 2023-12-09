@@ -18,6 +18,10 @@ class HeaderNav extends Component
             [
                 'title' => 'Players',
                 'href' => route('players.index'),
+            ],
+            [
+                'title' => 'Cards',
+                'href' => route('cards.index'),
             ]
         ];
     }

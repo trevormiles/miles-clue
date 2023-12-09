@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Card extends Model
 {
     protected $fillable = [
-        'name'
+        'name',
+        'card_category_id'
     ];
 }
