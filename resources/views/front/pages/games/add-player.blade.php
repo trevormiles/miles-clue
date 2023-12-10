@@ -31,7 +31,7 @@
                     @foreach ($cardsGroupedByCategory as $category)
                         <div>
                             <h3>{{ $category['cardCategory']->name }}s</h3>
-                            <div class="flex flex-col gap-1">
+                            <div class="flex flex-col gap-2.5">
                                 @foreach ($category['cards'] as $card)
                                     @if ($hasCardVariants)
                                         @foreach ($cardVariants as $cardVariant)
