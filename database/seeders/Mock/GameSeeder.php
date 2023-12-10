@@ -7,13 +7,16 @@ use App\Models\GameType;
 use App\Models\Game;
 use App\Models\CardGamePlayer;
 use App\Models\Player;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Carbon;
 
 class GameSeeder extends Seeder
 {
     public function run()
     {
-        $singleClueGameType = GameType::where('name', 'single')->first();
+        $singleClueGameType = GameType::where('name', 'Single')->first();
+        $doubleClueGameType = GameType::where('name', 'Double')->first();
+
         $games = [
             [
                 'name' => 'Nov. 27th, 2023',
@@ -23,7 +26,7 @@ class GameSeeder extends Seeder
             ],
             [
                 'name' => 'Nov. 15th, 2023',
-                'game_type_id' => $singleClueGameType->id,
+                'game_type_id' => $doubleClueGameType->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ],
@@ -35,7 +38,7 @@ class GameSeeder extends Seeder
             ],
             [
                 'name' => 'Dec. 21st, 2022',
-                'game_type_id' => $singleClueGameType->id,
+                'game_type_id' => $doubleClueGameType->id,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ]
@@ -47,57 +50,61 @@ class GameSeeder extends Seeder
         foreach (Game::all() as $game) {
             $playersCount = rand(3, Player::count());
             $players = Player::inRandomOrder()->limit($playersCount)->get();
-            $cards = $game->gameType->cards();
-            $cardsCount = count($cards) - 3;
 
-            $cardsCountPerPlayer = (int) floor($cardsCount / $playersCount);
-            $lastPlayerExtraCardsCount = $cardsCount % $cardsCountPerPlayer;
-            $availableCards = $cards->pluck('id')->all();
+            // Create the cardGamePlayers for the game with the player_id temporarily set to null
+            foreach ($game->gameType->cards() as $card) {
+                if ($game->gameType->hasCardVariants()) {
+                    foreach ($game->gameType->cardVariants() as $variant) {
+                        CardGamePlayer::create([
+                            'card_id' => $card->id,
+                            'game_id' => $game->id,
+                            'player_id' => null,
+                            'card_variant_id' => $variant->id,
+                        ]);
+                    }
+                } else {
+                    CardGamePlayer::create([
+                        'card_id' => $card->id,
+                        'game_id' => $game->id,
+                        'player_id' => null,
+                        'card_variant_id' => null,
+                    ]);
+                }
+            }
+
+            $cardGamePlayers = CardGamePlayer::where('game_id', $game->id)->get();
+            $cardGamePlayersCount = (int) $cardGamePlayers->count() - 3;
+
+            $cardsCountPerPlayer = (int) floor($cardGamePlayersCount / $playersCount);
+            $extraUnevenCardsCount = $cardGamePlayersCount % $playersCount;
 
             foreach ($players as $playerIndex => $player) {
                 foreach (range(1, $cardsCountPerPlayer) as $index) {
-                    $cardIndex = rand(0, count($availableCards) - 1);
-
-                    CardGamePlayer::create([
-                        'card_id' => $availableCards[$cardIndex],
-                        'game_id' => $game->id,
-                        'player_id' => $player->id,
-                    ]);
-
-                    unset($availableCards[$cardIndex]);
-                    $availableCards = array_values($availableCards);
-                }
-
-                // If this is the last player, assign the extra uneven cards
-                if ($playerIndex === $playersCount - 1 && $lastPlayerExtraCardsCount > 0) {
-                    foreach (range(1, $lastPlayerExtraCardsCount) as $index) {
-                        $cardIndex = rand(0, count($availableCards) - 1);
-
-                        CardGamePlayer::create([
-                            'card_id' => $availableCards[$cardIndex],
-                            'game_id' => $game->id,
-                            'player_id' => $player->id,
-                        ]);
-    
-                        unset($availableCards[$cardIndex]);
-                        $availableCards = array_values($availableCards);
-                    }
+                    $cardGamePlayers = $this->assignPlayerToCardGamePlayer($cardGamePlayers, $player);
                 }
             }
 
-            // Create records for the unclaimed cards (in the packet) not assigned to any player
-            foreach ($availableCards as $card) {
-                $cardIndex = rand(0, count($availableCards) - 1);
-
-                CardGamePlayer::create([
-                    'card_id' => $availableCards[$cardIndex],
-                    'game_id' => $game->id,
-                    'player_id' => null,
-                ]);
-
-                unset($availableCards[$cardIndex]);
-                $availableCards = array_values($availableCards);
+            // Distribute the extra uneven cards out randomly amongst the players
+            if ($extraUnevenCardsCount > 0) {
+                foreach (range(1, $extraUnevenCardsCount) as $index) {
+                    $cardGamePlayers = $this->assignPlayerToCardGamePlayer($cardGamePlayers, $players->random());
+                }
             }
         }
+    }
+
+    private function assignPlayerToCardGamePlayer(Collection $cardGamePlayers, Player $player): Collection
+    {
+        // Select random one from collection
+        $cardGamePlayer = $cardGamePlayers->random();
+
+        // Assign it the player id
+        $cardGamePlayer->player_id = $player->id;
+        $cardGamePlayer->save();
+
+        // Filter it out from collection
+        return $cardGamePlayers->filter(function ($item) use ($cardGamePlayer) {
+            return $item->id !== $cardGamePlayer->id;
+        });
     }
 }

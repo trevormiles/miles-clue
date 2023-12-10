@@ -13,7 +13,8 @@ class CardGamePlayer extends Model
     protected $fillable = [
         'card_id',
         'game_id',
-        'player_id'
+        'player_id',
+        'card_variant_id'
     ];
 
     public function card()

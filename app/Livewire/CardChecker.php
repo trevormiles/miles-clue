@@ -115,18 +115,9 @@ class CardChecker extends Component
     private function runQuantityCheck(): void
     {
         $userHasQuantity = 0;
-
-        if ($this->hasCardCheck($this->selectedCard1)) {
-            $userHasQuantity += 1;
-        }
-
-        if ($this->hasCardCheck($this->selectedCard2)) {
-            $userHasQuantity += 1;
-        }
-
-        if ($this->hasCardCheck($this->selectedCard3)) {
-            $userHasQuantity += 1;
-        }
+        $userHasQuantity += $this->getQuantityOfCardForSelectedPlayer($this->selectedCard1);
+        $userHasQuantity += $this->getQuantityOfCardForSelectedPlayer($this->selectedCard2);
+        $userHasQuantity += $this->getQuantityOfCardForSelectedPlayer($this->selectedCard3);
 
         if ($userHasQuantity === $this->selectedQuantity) {
             $this->showQuantitySuccess = true;
@@ -144,6 +135,13 @@ class CardChecker extends Component
             ->first();
 
         return $hasCard ? true : false;
+    }
+
+    private function getQuantityOfCardForSelectedPlayer(string $selectedCard): int
+    {
+        return $this->cardGamePlayers->where('player_id', $this->selectedPlayerId)
+            ->where('card_id', $selectedCard)
+            ->count();
     }
 
     private function hideAllResultNotifications(): void

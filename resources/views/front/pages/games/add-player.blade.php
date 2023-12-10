@@ -33,10 +33,34 @@
                             <h3>{{ $category['cardCategory']->name }}s</h3>
                             <div class="flex flex-col gap-1">
                                 @foreach ($category['cards'] as $card)
-                                    <div>
-                                        <input type="checkbox" id="card_{{ $card->id }}" name="card_{{ $card->id }}" value="{{ $card->id }}">
-                                        <label class="ml-1" for="card_{{ $card->id }}">{{ $card->name }}</label>
-                                    </div>
+                                    @if ($hasCardVariants)
+                                        @foreach ($cardVariants as $cardVariant)
+                                            <div>
+                                                <input
+                                                    type="checkbox"
+                                                    id="card_{{ $card->id }}_{{ $cardVariant->id }}"
+                                                    name="card_{{ $card->id }}_{{ $cardVariant->id }}"
+                                                    value="card_{{ $card->id }}_{{ $cardVariant->id }}"
+                                                >
+                                                <label
+                                                    class="ml-1"
+                                                    for="card_{{ $card->id }}_{{ $cardVariant->id }}"
+                                                >
+                                                    {{ $card->name }} - {{ $cardVariant->name }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div>
+                                            <input
+                                                type="checkbox"
+                                                id="card_{{ $card->id }}"
+                                                name="card_{{ $card->id }}"
+                                                value="{{ $card->id }}"
+                                            >
+                                            <label class="ml-1" for="card_{{ $card->id }}">{{ $card->name }}</label>
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
                         </div>

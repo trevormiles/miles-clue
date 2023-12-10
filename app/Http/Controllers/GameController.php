@@ -44,11 +44,23 @@ class GameController extends Controller
         $game = Game::create(['name' => $name, 'game_type_id' => $gameTypeID]);
 
         foreach ($game->gameType->cards() as $card) {
-            CardGamePlayer::create([
-                'game_id' => $game->id,
-                'card_id' => $card->id,
-                'player_id' => null,
-            ]);
+            if ($game->gameType->hasCardVariants()) {
+                foreach ($game->gameType->cardVariants() as $variant) {
+                    CardGamePlayer::create([
+                        'card_id' => $card->id,
+                        'game_id' => $game->id,
+                        'player_id' => null,
+                        'card_variant_id' => $variant->id,
+                    ]);
+                }
+            } else {
+                CardGamePlayer::create([
+                    'card_id' => $card->id,
+                    'game_id' => $game->id,
+                    'player_id' => null,
+                    'card_variant_id' => null,
+                ]);
+            }
         }
 
         return redirect()->route('games.index');
@@ -104,6 +116,8 @@ class GameController extends Controller
             'game' => $game,
             'players' => Player::all(),
             'cardsGroupedByCategory' => $game->gameType->cardsGroupedByCategory(),
+            'hasCardVariants' => $game->gameType->hasCardVariants(),
+            'cardVariants' => $game->gameType->cardVariants(),
         ]);
     }
 
@@ -116,7 +130,18 @@ class GameController extends Controller
 
         foreach ($request->all() as $key => $value) {
             if (str_contains($key, 'card_')) {
-                $cardGamePlayer = CardGamePlayer::where("card_id", $value)->where("game_id", $game->id)->first();
+                if ($game->gameType->hasCardVariants()) {
+                    $valueExploded = explode("_", $value);
+                    $cardId = $valueExploded[1];
+                    $cardVariantId = $valueExploded[2];
+                    $cardGamePlayer = CardGamePlayer::where("card_id", $cardId)
+                        ->where("card_variant_id", $cardVariantId)
+                        ->where("game_id", $game->id)
+                        ->first();
+                } else {
+                    $cardGamePlayer = CardGamePlayer::where("card_id", $value)->where("game_id", $game->id)->first();
+                }
+
                 $cardGamePlayer->player_id = $playerID;
                 $cardGamePlayer->save();
             }

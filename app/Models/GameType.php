@@ -43,4 +43,30 @@ class GameType extends Model
 
         return $result;
     }
+
+    public function cardVariantGameTypes()
+    {
+        return $this->hasMany(CardVariantGameType::class);
+    }
+
+    public function cardVariantsQuantity(): int
+    {
+        return $this->cardVariantGameTypes->count();
+    }
+
+    public function hasCardVariants(): bool
+    {
+        return $this->cardVariantsQuantity() > 0;
+    }
+
+    public function cardVariants()
+    {
+        $cardVariants = collect();
+
+        foreach ($this->cardVariantGameTypes()->get() as $cardVariantGameType) {
+            $cardVariants->push($cardVariantGameType->cardVariant);
+        }
+
+        return $cardVariants;
+    }
 }

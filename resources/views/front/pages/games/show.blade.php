@@ -4,7 +4,7 @@
     <div class="container mx-auto px-4 py-10">
         <a href="{{ route('games.index') }}" class="back-button">Back to all games</a>
         <div class="flex justify-between items-center">
-            <h1 class="m-0">{{ $game->name }}</h1>
+            <h1 class="m-0">{{ $game->name }} <span class="font-medium">({{ $game->gameType->name }})</span></h1>
             <a href="{{ route('games.edit', $game->id) }}" class="bg-white py-4 px-4 rounded-md">
                 @svg('pencil-icon', 'w-4 h-auto text-green-700')
             </a>

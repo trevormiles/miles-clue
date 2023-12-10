@@ -63,9 +63,6 @@ Route::get('/players/create', PlayerController::class . "@create")
 Route::post('/players', PlayerController::class . "@store")
     ->name('players.store');
 
-Route::get('/players/{player}', PlayerController::class . "@show")
-    ->name('players.show');
-
 Route::get('/players/{player}/edit', PlayerController::class . "@edit")
     ->name('players.edit');
 
@@ -83,9 +80,6 @@ Route::get('/cards/create', CardController::class . "@create")
 Route::post('/cards', CardController::class . "@store")
     ->name('cards.store');
 
-Route::get('/cards/{card}', CardController::class . "@show")
-    ->name('cards.show');
-
 Route::get('/cards/{card}/edit', CardController::class . "@edit")
     ->name('cards.edit');
 
@@ -95,19 +89,33 @@ Route::patch('/cards/{card}', CardController::class . "@update")
 
 // Game type routes
 Route::get('/game-types', GameTypeController::class . "@index")
-->name('gameTypes.index');
+    ->name('gameTypes.index');
 
 Route::get('/game-types/create', GameTypeController::class . "@create")
-->name('gameTypes.create');
+    ->name('gameTypes.create');
 
 Route::post('/game-types', GameTypeController::class . "@store")
-->name('gameTypes.store');
-
-Route::get('/game-types/{gameType}', GameTypeController::class . "@show")
-->name('gameTypes.show');
+    ->name('gameTypes.store');
 
 Route::get('/game-types/{gameType}/edit', GameTypeController::class . "@edit")
-->name('gameTypes.edit');
+    ->name('gameTypes.edit');
 
 Route::patch('/game-types/{gameType}', GameTypeController::class . "@update")
-->name('gameTypes.update');
+    ->name('gameTypes.update');
+
+
+// Card variant routes
+Route::get('/card-variants', CardVariantController::class . "@index")
+    ->name('cardVariants.index');
+
+Route::get('/card-variants/create', CardVariantController::class . "@create")
+    ->name('cardVariants.create');
+
+Route::post('/card-variants', CardVariantController::class . "@store")
+    ->name('cardVariants.store');
+
+Route::get('/card-variants/{cardVariant}/edit', CardVariantController::class . "@edit")
+    ->name('cardVariants.edit');
+
+Route::patch('/card-variants/{cardVariant}', CardVariantController::class . "@update")
+    ->name('cardVariants.update');

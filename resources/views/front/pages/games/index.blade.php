@@ -9,7 +9,7 @@
         <div class="flex flex-col gap-4">
             @foreach ($games as $game)
                 <a href="{{ route('games.show', $game->id) }}" class="block rounded-lg p-4 bg-white w-full">
-                    <h3>{{ $game->name }}</h3>
+                    <h3>{{ $game->name }} <span class="font-medium">({{ $game->gameType->name }})</span></h3>
                     <p class="mb-0"><span class="font-medium">Players:</span> {{ $game->playersShortDisplay() }}</p>
                 </a>
             @endforeach

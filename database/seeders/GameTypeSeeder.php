@@ -9,8 +9,9 @@ class GameTypeSeeder extends Seeder
 {
     public function run()
     {
-        GameType::create([
-            'name' => 'Single'
+        GameType::insert([
+            ['name' => 'Single'],
+            ['name' => 'Double']
         ]);
     }
 }

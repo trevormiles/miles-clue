@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('card_game_player', function (Blueprint $table) {
+        Schema::create('card_variant_game_type', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('card_id');
-            $table->foreignId('game_id');
-            $table->foreignId('player_id')->nullable();
-            $table->foreignId('card_variant_id')->nullable();
+            $table->foreignId('card_variant_id');
+            $table->foreignId('game_type_id');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('card_game_player');
+        Schema::dropIfExists('card_variant_game_type');
     }
 };

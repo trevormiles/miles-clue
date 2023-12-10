@@ -11,7 +11,8 @@ class CardGameTypeSeeder extends Seeder
 {
     public function run()
     {
-        $singleClueGameType = GameType::where('name', 'single')->first();
+        // Single Clue
+        $singleClueGameType = GameType::where('name', 'Single')->first();
         $singleClueCards = [
             // Suspects
             'Brunette',
@@ -63,6 +64,41 @@ class CardGameTypeSeeder extends Seeder
             CardGameType::create([
                 'card_id' => Card::where('name', $card)->firstOrFail()->id,
                 'game_type_id' => $singleClueGameType->id,
+            ]);
+        }
+
+        // Double Clue
+        $doubleClueGameType = GameType::where('name', 'Double')->first();
+        $doubleClueCards = [
+            // Suspects
+            'Green',
+            'Mustard',
+            'Peach',
+            'Peacock',
+            'Plum',
+            'Scarlet',
+            'White',
+
+            // Weapons
+            'Candlestick',
+            'Lead Pipe',
+            'Revolver',
+            'Rope',
+            'Wrench',
+
+            // Rooms
+            'Boat House',
+            'Carriage House',
+            'Hall',
+            'Kitchen',
+            'Lounge',
+            'Study',
+        ];
+
+        foreach ($doubleClueCards as $card) {
+            CardGameType::create([
+                'card_id' => Card::where('name', $card)->firstOrFail()->id,
+                'game_type_id' => $doubleClueGameType->id,
             ]);
         }
     }
