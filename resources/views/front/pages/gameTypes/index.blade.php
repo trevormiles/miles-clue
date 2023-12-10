@@ -14,7 +14,7 @@
                         class="block rounded-lg p-4 bg-white w-full flex justify-between items-center"
                     >
                         <h3 class="mb-0">{{ $gameType->name }}</h3>
-                        @svg('pencil-icon', 'w-4 h-auto text-green-700')
+                        <x-icon-pencil-icon class="w-4 h-auto text-green-700" />
                     </a>
                 @endforeach
             </div>

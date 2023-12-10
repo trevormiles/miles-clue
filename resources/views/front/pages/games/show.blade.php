@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center">
             <h1 class="m-0">{{ $game->name }} <span class="font-medium">({{ $game->gameType->name }})</span></h1>
             <a href="{{ route('games.edit', $game->id) }}" class="bg-white py-4 px-4 rounded-md">
-                @svg('pencil-icon', 'w-4 h-auto text-green-700')
+                <x-icon-pencil-icon class="w-4 h-auto text-green-700" />
             </a>
         </div>
 
@@ -29,7 +29,7 @@
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="text-red-700">
-                                @svg('trashcan', 'w-4 h-auto')
+                                <x-icon-trashcan class="w-4 h-auto" />
                             </button>
                         </form>
                     </div>
