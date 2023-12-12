@@ -72,3 +72,8 @@ p {
 .back-button:hover {
     color: #1a5420;
 }
+
+.fill-view-height {
+    /* Must correspond with header and footer heights */
+    min-height: calc(100vh - 48px - 32px);
+}
