@@ -68,38 +68,38 @@ class CardGameTypeSeeder extends Seeder
         }
 
         // Double Clue
-        $doubleClueGameType = GameType::where('name', 'Double')->first();
-        $doubleClueCards = [
-            // Suspects
-            'Green',
-            'Mustard',
-            'Peach',
-            'Peacock',
-            'Plum',
-            'Scarlet',
-            'White',
+        // $doubleClueGameType = GameType::where('name', 'Double')->first();
+        // $doubleClueCards = [
+        //     // Suspects
+        //     'Green',
+        //     'Mustard',
+        //     'Peach',
+        //     'Peacock',
+        //     'Plum',
+        //     'Scarlet',
+        //     'White',
 
-            // Weapons
-            'Candlestick',
-            'Lead Pipe',
-            'Revolver',
-            'Rope',
-            'Wrench',
+        //     // Weapons
+        //     'Candlestick',
+        //     'Lead Pipe',
+        //     'Revolver',
+        //     'Rope',
+        //     'Wrench',
 
-            // Rooms
-            'Boat House',
-            'Carriage House',
-            'Hall',
-            'Kitchen',
-            'Lounge',
-            'Study',
-        ];
+        //     // Rooms
+        //     'Boat House',
+        //     'Carriage House',
+        //     'Hall',
+        //     'Kitchen',
+        //     'Lounge',
+        //     'Study',
+        // ];
 
-        foreach ($doubleClueCards as $card) {
-            CardGameType::create([
-                'card_id' => Card::where('name', $card)->firstOrFail()->id,
-                'game_type_id' => $doubleClueGameType->id,
-            ]);
-        }
+        // foreach ($doubleClueCards as $card) {
+        //     CardGameType::create([
+        //         'card_id' => Card::where('name', $card)->firstOrFail()->id,
+        //         'game_type_id' => $doubleClueGameType->id,
+        //     ]);
+        // }
     }
 }
