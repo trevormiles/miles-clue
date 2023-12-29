@@ -5,6 +5,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\PlayerController;
 use App\Http\Controllers\CardController;
 use App\Http\Controllers\GameTypeController;
+use App\Http\Controllers\CardVariantController;
 
 /*
 |--------------------------------------------------------------------------
