@@ -23,7 +23,7 @@
             </div>
 
             <div class="mt-5">
-                <div>Select Cards for game type:</div>
+                <div>Select cards for game type:</div>
                 <div class="flex flex-col gap-6 mt-2">
                     @foreach ($cardsGroupedByCategory as $category)
                         <div>
@@ -42,6 +42,24 @@
                                     </div>
                                 @endforeach
                             </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <div class="mt-8">
+                <div>Select card variants for game type:</div>
+                <div class="flex flex-col gap-1 mt-2">
+                    @foreach ($cardVariants as $cardVariant)
+                        <div>
+                            <input
+                                type="checkbox"
+                                id="variant_{{ $cardVariant->id }}"
+                                name="variant_{{ $cardVariant->id }}"
+                                value="{{ $cardVariant->id }}"
+                                {{ (in_array($cardVariant->id, $selectedCardVariants)) ? 'checked' : '' }}
+                            >
+                            <label class="ml-1" for="card_{{ $cardVariant->id }}">{{ $cardVariant->name }}</label>
                         </div>
                     @endforeach
                 </div>

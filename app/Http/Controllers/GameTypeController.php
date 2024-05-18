@@ -7,6 +7,8 @@ use App\Models\GameType;
 use App\Models\Card;
 use App\Models\CardCategory;
 use App\Models\CardGameType;
+use App\Models\CardVariant;
+use App\Models\CardVariantGameType;
 
 class GameTypeController extends Controller
 {
@@ -31,6 +33,7 @@ class GameTypeController extends Controller
 
         return view('front.pages.gameTypes.create', [
             'cardsGroupedByCategory' => $cardsGroupedByCategory,
+            'cardVariants' => CardVariant::all(),
         ]);
     }
 
@@ -47,6 +50,11 @@ class GameTypeController extends Controller
             if (str_contains($key, 'card_')) {
                 CardGameType::create([
                     'card_id' => $value,
+                    'game_type_id' => $gameType->id,
+                ]);
+            } else if (str_contains($key, 'variant_')) {
+                CardVariantGameType::create([
+                    'card_variant_id' => $value,
                     'game_type_id' => $gameType->id,
                 ]);
             }
@@ -76,10 +84,14 @@ class GameTypeController extends Controller
             array_push($selectedCards, $cardGameType->card_id);
         }
 
+        $selectedCardVariants = $gameType->cardVariants()->pluck("id")->toArray();
+
         return view('front.pages.gameTypes.edit', [
             'gameType' => $gameType,
             'cardsGroupedByCategory' => $cardsGroupedByCategory,
             'selectedCards' => $selectedCards,
+            'cardVariants' => CardVariant::all(),
+            'selectedCardVariants' => $selectedCardVariants,
         ]);
     }
 
@@ -93,6 +105,7 @@ class GameTypeController extends Controller
         $gameType->save();
 
         $cardsInRequest = [];
+        $cardVariantsInRequest = [];
 
         foreach ($request->all() as $key => $value) {
             if (str_contains($key, 'card_')) {
@@ -109,12 +122,31 @@ class GameTypeController extends Controller
                         'game_type_id' => $gameType->id,
                     ]);
                 }
+            } else if (str_contains($key, 'variant_')) {
+                array_push($cardVariantsInRequest, $value);
+
+                $cardVariantGameType = CardVariantGameType::where('card_variant_id', $value)
+                    ->where('game_type_id', $gameType->id)
+                    ->first();
+
+                // Add it if it doesn't already exist
+                if (!$cardVariantGameType) {
+                    CardVariantGameType::create([
+                        'card_variant_id' => $value,
+                        'game_type_id' => $gameType->id,
+                    ]);
+                }
             }
         }
 
-        // Delete the ones not in the request
+        // Delete the cards not in the request
         CardGameType::where('game_type_id', $gameType->id)
             ->whereNotIn('card_id', $cardsInRequest)
+            ->delete();
+
+        // Delete the card variants not in the request
+        CardVariantGameType::where('game_type_id', $gameType->id)
+            ->whereNotIn('card_variant_id', $cardVariantsInRequest)
             ->delete();
 
         return redirect()->route('gameTypes.index');
